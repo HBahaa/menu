@@ -5,8 +5,8 @@ import './Categories.css'
 
 class Categories extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = { userRole: '', activeIndex: 0, categories: [], categoryStatus: '', itemStatus: '', showCategoryModal: false, showItemModal:false, activeItem: '', itemId: '', itemName: '', itemPrice: '', itemDesc: '', catItems: [], error: false }
 
     this.openItemModal = this.openItemModal.bind(this);
@@ -71,7 +71,9 @@ class Categories extends Component {
       this.setState({'categoryStatus': 'Edit'})
       this.setState({itemId: data.id})
       this.setState({itemName: data.name})
-      this.setState({itemDesc: data.description})
+      if (data.description) {
+        this.setState({itemDesc: data.description})
+      }
       this.setState({catItems: data.items})
     }else{
       this.setState({'categoryStatus': 'Add'})
