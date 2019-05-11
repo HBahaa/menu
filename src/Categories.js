@@ -7,7 +7,7 @@ class Categories extends Component {
 
   constructor(){
     super();
-    this.state = { userRole: '', activeIndex: 0, categories: [], categoryStatus: '', categoryStatus: '', showCategoryModal: false, showItemModal:false, activeItem: '', itemId: '', itemName: '', itemPrice: '', itemDesc: '', catItems: [], error: false }
+    this.state = { userRole: '', activeIndex: 0, categories: [], categoryStatus: '', itemStatus: '', showCategoryModal: false, showItemModal:false, activeItem: '', itemId: '', itemName: '', itemPrice: '', itemDesc: '', catItems: [], error: false }
 
     this.openItemModal = this.openItemModal.bind(this);
     this.openCategoryModal = this.openCategoryModal.bind(this);
@@ -52,12 +52,14 @@ class Categories extends Component {
 
   openItemModal(data, itemIndex){
     if (data) {
+      this.setState({'itemStatus': 'Edit'})
       this.setState({activeItem: itemIndex})
       this.setState({itemId: data.id})
       this.setState({itemName: data.name})
       this.setState({itemDesc: data.description})
       this.setState({itemPrice: data.price})
     }else{
+      this.setState({'itemStatus': 'Add'})
       this.clearInputs()
     }
     this.setState({showItemModal: true})
@@ -210,11 +212,11 @@ class Categories extends Component {
           <h4>Name* : {category.name}</h4>
           {category.description? <h4>Description : {category.description}</h4>: ''}
 
-          {userRole == "admin" ? <template><Button basic color="green" onClick={e => this.openCategoryModal(category)}>Edit Category</Button>
-          <Button basic color="red" onClick={this.deleteCategory}>Delete Category</Button></template> : ''}
+          {userRole == "admin" ? <div><Button basic color="green" onClick={e => this.openCategoryModal(category)}>Edit Category</Button>
+          <Button basic color="red" onClick={this.deleteCategory}>Delete Category</Button></div> : ''}
 
           <h3>Items</h3>
-          {userRole == "admin" ? <Button basic color="teal" onClick={e=> this.setState({showItemModal: true})}>Add New Item</Button> : ''}
+          {userRole == "admin" ? <Button basic color="teal" onClick={e=> this.openItemModal()}>Add New Item</Button> : ''}
           <Card.Group>
             {category.items.map((item, i)=> <Item data={item} index={i} key={i} editItem={this.openItemModal} deleteItem={this.deleteItem} />)}
           </Card.Group>
@@ -234,8 +236,7 @@ class Categories extends Component {
 
           <Accordion fluid styled>
             {element}
-          </Accordion
-          >
+          </Accordion>
           {/* Add & edit Category Modal */}
           <Modal open={showCategoryModal} closeOnEscape={closeOnEscape} closeOnDimmerClick={closeOnDimmerClick} onClose={this.closeCategoryModal}>
             <Modal.Header>{categoryStatus} Category</Modal.Header>
