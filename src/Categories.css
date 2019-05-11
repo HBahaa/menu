@@ -1,0 +1,18 @@
+.category{
+    margin-top: 2em !important;
+}
+.ui.accordion .title:not(.ui){
+    font-size: 1.5em !important;
+}
+
+.ui.styled.accordion .accordion .title, .ui.styled.accordion .title{
+    border-bottom: 1px solid #ddd;
+    background: teal !important;
+    color: white !important;
+}
+.ui.styled.accordion .active.title{
+    background: #2aa9a9 !important;
+}
+.ui.teal.button, .ui.default.button{
+    margin-bottom: 2em !important;
+}

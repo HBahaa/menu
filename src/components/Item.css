@@ -1,0 +1,21 @@
+.ui.card, .ui.cards>.card{
+    width: 340px !important;
+}
+
+.ui.styled.accordion .accordion .content, .ui.styled.accordion .content{
+    padding: 1.5em 1em 1.5em !important;
+}
+.ui.styled.accordion .accordion .extra, .ui.styled.accordion .extra{
+    padding: 0em !important;
+}
+
+.ui.card .meta, .ui.cards>.card .meta {
+    font-size: 1.2em !important;
+    margin-top: .5em;
+}
+.ui.buttons .button:last-child{
+    border-top-right-radius: 0 !important;
+}
+.ui.buttons .button:first-child{
+    border-top-left-radius: 0 !important;
+}
