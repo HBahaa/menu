@@ -202,8 +202,8 @@ class Categories extends Component {
 
 
   // close modals
-  closeCategoryModal = () => this.setState({ showCategoryModal: false })
-  closeItemModal = () => this.setState({ showItemModal: false })
+  closeCategoryModal = () => {this.setState({ showCategoryModal: false }); this.setState({error: false})}
+  closeItemModal = () => {this.setState({ showItemModal: false }); this.setState({error: false})}
 
   render() {
     const { userRole, activeIndex, categories, categoryStatus, showCategoryModal, itemStatus, showItemModal, closeOnEscape, closeOnDimmerClick, error } = this.state;
