@@ -109,6 +109,7 @@ class Categories extends Component {
   // category (add, edit, delete) function
   addCategory(){
     if (this.state.itemName) {
+      this.setState({error: false})
       let newCategory = {
         name: this.state.itemName,
         description: this.state.itemDesc,
@@ -149,20 +150,25 @@ class Categories extends Component {
 
   // category item functions
   addItem(){
-    let newItem = {
-      name: this.state.itemName,
-      description: this.state.itemDesc,
-      price: this.state.itemPrice,
-    }
-    let newData = this.state.categories.map((cat, i)=>{
-      if (i == this.state.activeIndex) {
-        cat.items.push(newItem)
+    if (this.state.itemName && this.state.itemPrice) {
+      this.setState({error: false})
+      let newItem = {
+        name: this.state.itemName,
+        description: this.state.itemDesc,
+        price: this.state.itemPrice,
       }
-      return cat
-    })
-    this.setState({"categories": newData})
-    this.setState({showItemModal: false})
-    localStorage.setItem('categories', JSON.stringify(newData))
+      let newData = this.state.categories.map((cat, i)=>{
+        if (i == this.state.activeIndex) {
+          cat.items.push(newItem)
+        }
+        return cat
+      })
+      this.setState({"categories": newData})
+      this.setState({showItemModal: false})
+      localStorage.setItem('categories', JSON.stringify(newData))
+    }else{
+      this.setState({error: true})
+    }
   }
 
   editItem(){
@@ -237,6 +243,7 @@ class Categories extends Component {
           <Accordion fluid styled>
             {element}
           </Accordion>
+
           {/* Add & edit Category Modal */}
           <Modal open={showCategoryModal} closeOnEscape={closeOnEscape} closeOnDimmerClick={closeOnDimmerClick} onClose={this.closeCategoryModal}>
             <Modal.Header>{categoryStatus} Category</Modal.Header>
@@ -267,6 +274,9 @@ class Categories extends Component {
           <Modal open={showItemModal} closeOnEscape={closeOnEscape} closeOnDimmerClick={closeOnDimmerClick} onClose={this.closeItemModal}>
             <Modal.Header>{itemStatus} Item</Modal.Header>
             <Modal.Content>
+              {error ? <Message error >
+                <Message.Header>Item Name & Price are required</Message.Header>
+              </Message> : ''}
               <Form size="large">
                 <Form.Input fluid placeholder="Name" value={this.state.itemName} onChange={e=> this.setState({itemName: e.target.value})}/>
                 <Form.Input fluid placeholder="Description" value={this.state.itemDesc} onChange={e=> this.setState({itemDesc: e.target.value})}/>
